@@ -1,0 +1,6 @@
+.signup-container
+    form(name="signUpForm")
+        //input(type="text", placeholder="enter a username", name="username", ng-model="username", ng-min="3", ng-max="25", ng-required="true")
+        input(type="email", placeholder="enter an email", name="email", ng-model="email", ng-required="true")
+        input(type="text", placeholder="enter a password", name="password", ng-model="password", ng-min="6", ng-required="true")
+        button(type="submit", ng-click="submit()", ng-disabled="signUpForm.$invalid") Sign up!
