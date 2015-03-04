@@ -35,6 +35,17 @@ namespace GradCap.Models
     public class RegisterBindingModel
     {
         [Required]
+        [StringLength(50, MinimumLength = 1)]
+        public string FirstName { get; set; }
+
+        [Required]
+        [StringLength(50, MinimumLength = 1)]
+        public string LastName { get; set; }
+
+        [Required]
+        public USAStates HomeState { get; set; }
+
+        [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
 

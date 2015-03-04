@@ -21,7 +21,7 @@ namespace GradCap.Models
         public int AvgACT { get; set; }
         public string Website { get; set; }
 
-        public ICollection<Student> FavoriteStudents { get; set; }
-        public ICollection<Student> NoInterestStudents { get; set; }
+        public ICollection<ApplicationUser> FavoriteStudents { get; set; }
+        public ICollection<ApplicationUser> NoInterestStudents { get; set; }
     }
 }

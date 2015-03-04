@@ -19,7 +19,6 @@ namespace GradCap.DAL
             return new GradCapContext();
         }
 
-        public DbSet<Student> Students { get; set; }
         public DbSet<School> Schools { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -27,7 +26,7 @@ namespace GradCap.DAL
             modelBuilder.Entity<IdentityUserLogin>().HasKey<string>(l => l.UserId);
             modelBuilder.Entity<IdentityRole>().HasKey<string>(r => r.Id);
             modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
-            modelBuilder.Entity<Student>()
+            modelBuilder.Entity<ApplicationUser>()
                 .HasMany<School>(s => s.FavoriteSchools)
                 .WithMany(c => c.FavoriteStudents)
                 .Map(cs =>
@@ -37,7 +36,7 @@ namespace GradCap.DAL
                     cs.ToTable("FavoriteStudentSchool");
                 });
 
-            modelBuilder.Entity<Student>()
+            modelBuilder.Entity<ApplicationUser>()
                 .HasMany<School>(s => s.NoInterestSchools)
                 .WithMany(c => c.NoInterestStudents)
                 .Map(cs =>

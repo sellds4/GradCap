@@ -10,16 +10,6 @@ namespace GradCap.DAL
     {
         protected override void Seed(GradCapContext context)
         {
-            var students = new List<Student>
-            {
-                new Student{FirstName="Test1",LastName="Test1",Email="test1@test.com"},
-                new Student{FirstName="Test2",LastName="Test2",Email="test2@test.com"},
-                new Student{FirstName="Test3",LastName="Test3",Email="test3@test.com"}
-            };
-
-            students.ForEach(s => context.Students.Add(s));
-            context.SaveChanges();
-
             var schools = new List<School>
             {
                 new School{Name="University of One",

@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace GradCap.Models
 {
@@ -16,18 +18,12 @@ namespace GradCap.Models
             // Add custom user claims here
             return userIdentity;
         }
-    }
 
-    /*public class GradCapContext : IdentityDbContext<ApplicationUser>
-    {
-        public GradCapContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
-        {
-        }
-        
-        public static GradCapContext Create()
-        {
-            return new GradCapContext();
-        }
-    }*/
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public USAStates HomeState { get; set; }
+
+        public ICollection<School> FavoriteSchools { get; set; }
+        public ICollection<School> NoInterestSchools { get; set; }
+    }
 }

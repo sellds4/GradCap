@@ -4,10 +4,14 @@ angular.module('gradCapApp.controllers').controller('SignUpCtrl', ['$scope', '$l
     function($scope, $location, Account) {
 
     $scope.submit = function() {
-        var req = {
-            Email: $scope.email,
-            Password: $scope.password,
-            ConfirmPassword: $scope.password
+        var s = $scope,
+            req = {
+            FirstName: s.firstname,
+            LastName: s.lastname,
+            HomeState: s.homestate,
+            Email: s.email,
+            Password: s.password,
+            ConfirmPassword: s.password
         };
         Account.register(req).then(function(success) {
             alert('Yes');
