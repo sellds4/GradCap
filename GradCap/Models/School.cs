@@ -22,6 +22,5 @@ namespace GradCap.Models
         public string Website { get; set; }
 
         public ICollection<ApplicationUser> FavoriteStudents { get; set; }
-        public ICollection<ApplicationUser> NoInterestStudents { get; set; }
     }
 }

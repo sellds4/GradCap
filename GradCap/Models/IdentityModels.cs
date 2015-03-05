@@ -24,6 +24,6 @@ namespace GradCap.Models
         public USAStates HomeState { get; set; }
 
         public ICollection<School> FavoriteSchools { get; set; }
-        public ICollection<School> NoInterestSchools { get; set; }
+        public ICollection<School> ViewedSchools { get; set; }
     }
 }

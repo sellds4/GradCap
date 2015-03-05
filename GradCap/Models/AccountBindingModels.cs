@@ -92,4 +92,18 @@ namespace GradCap.Models
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
+
+    public class ViewedSchoolBindingModel
+    {
+        [Required]
+        public string SchoolName;
+        [Required]
+        public bool FavoriteSchool;
+    }
+
+    public class SchoolBindingModel
+    {
+        [Required]
+        public string SchoolName;
+    }
 }

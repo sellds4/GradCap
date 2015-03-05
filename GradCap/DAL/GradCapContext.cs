@@ -35,16 +35,6 @@ namespace GradCap.DAL
                     cs.MapRightKey("SchoolId");
                     cs.ToTable("FavoriteStudentSchool");
                 });
-
-            modelBuilder.Entity<ApplicationUser>()
-                .HasMany<School>(s => s.NoInterestSchools)
-                .WithMany(c => c.NoInterestStudents)
-                .Map(cs =>
-                {
-                    cs.MapLeftKey("StudentId");
-                    cs.MapRightKey("SchoolId");
-                    cs.ToTable("NoInterestStudentSchool");
-                });
         } 
     }
 }

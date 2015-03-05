@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -16,6 +17,7 @@ using Microsoft.Owin.Security.OAuth;
 using GradCap.Models;
 using GradCap.Providers;
 using GradCap.Results;
+using GradCap.DAL;
 
 namespace GradCap.Controllers
 {
@@ -375,6 +377,79 @@ namespace GradCap.Controllers
                 return GetErrorResult(result); 
             }
             return Ok();
+        }
+
+        // POST api/Account/ViewedSchool
+        [Route("ViewedSchool")]
+        public async Task<IHttpActionResult> ViewedSchool(ViewedSchoolBindingModel model)
+        {
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                ApplicationUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+
+                GradCapContext db = new GradCapContext();
+
+                School School = db.Schools.FirstOrDefault(x => x.Name == model.SchoolName);
+
+                db.Users.FirstOrDefault(x => x.Id == user.Id).ViewedSchools.Add(School);
+                if(model.FavoriteSchool)
+                {
+                    db.Users.FirstOrDefault(x => x.Id == user.Id).FavoriteSchools.Add(School);
+                }
+                db.SaveChanges();
+
+                return Ok();
+            }
+        }
+
+        // POST api/Account/AddFavoriteSchool for already Viewed Schools
+        [Route("AddFavoriteSchool")]
+        public async Task<IHttpActionResult> AddFavoriteSchool(SchoolBindingModel model)
+        {
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                ApplicationUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+
+                GradCapContext db = new GradCapContext();
+
+                School School = db.Schools.FirstOrDefault(x => x.Name == model.SchoolName);
+
+                db.Users.FirstOrDefault(x => x.Id == user.Id).FavoriteSchools.Add(School);
+                db.SaveChanges();
+
+                return Ok();
+            }
+        }
+
+        // POST api/Account/RemoveFavoriteSchool
+        [Route("RemoveFavoriteSchool")]
+        public async Task<IHttpActionResult> RemoveFavoriteSchool(SchoolBindingModel model)
+        {
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                ApplicationUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+
+                GradCapContext db = new GradCapContext();
+
+                School School = db.Schools.FirstOrDefault(x => x.Name == model.SchoolName);
+
+                db.Users.FirstOrDefault(x => x.Id == user.Id).FavoriteSchools.Remove(School);
+                db.SaveChanges();
+
+                return Ok();
+            }
         }
 
         protected override void Dispose(bool disposing)
