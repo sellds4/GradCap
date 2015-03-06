@@ -1,4 +1,9 @@
 .logout(ng-click="logout()") Logout
 br
+.fav-schools(ng-repeat="favSchool in favoriteSchools")
+    .fav-school {{favSchool.Name}}
+br
+br
 .schools(ng-repeat="school in schools")
     .school {{school.Name}}
+    button(ng-click="addFavorite(school.Name)") Add Favorite

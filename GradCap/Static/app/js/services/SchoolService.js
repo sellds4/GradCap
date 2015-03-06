@@ -11,5 +11,4 @@ angular.module('gradCapApp.services').service('SchoolService', ['$q', '$http', f
         });
         return d.promise;
     };
-
 }]);

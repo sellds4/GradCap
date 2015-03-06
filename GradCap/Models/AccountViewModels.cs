@@ -32,6 +32,13 @@ namespace GradCap.Models
         public bool HasRegistered { get; set; }
 
         public string LoginProvider { get; set; }
+
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public USAStates HomeState { get; set; }
+
+        public ICollection<School> FavoriteSchools { get; set; }
+        public ICollection<School> ViewedSchools { get; set; }
     }
 
     public class UserLoginInfoViewModel

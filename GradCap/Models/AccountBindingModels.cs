@@ -93,7 +93,7 @@ namespace GradCap.Models
         public string ConfirmPassword { get; set; }
     }
 
-    public class ViewedSchoolBindingModel
+    public class AddViewedSchoolBindingModel
     {
         [Required]
         public string SchoolName;

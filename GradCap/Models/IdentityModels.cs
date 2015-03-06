@@ -19,6 +19,12 @@ namespace GradCap.Models
             return userIdentity;
         }
 
+        public ApplicationUser()
+        {
+            FavoriteSchools = new HashSet<School>();
+            ViewedSchools = new HashSet<School>();
+        }
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public USAStates HomeState { get; set; }

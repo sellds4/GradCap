@@ -18,6 +18,7 @@ using GradCap.Models;
 using GradCap.Providers;
 using GradCap.Results;
 using GradCap.DAL;
+using System.Web.Http.Description;
 
 namespace GradCap.Controllers
 {
@@ -27,6 +28,7 @@ namespace GradCap.Controllers
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
+        GradCapContext db = new GradCapContext();
 
         public AccountController()
         {
@@ -379,9 +381,9 @@ namespace GradCap.Controllers
             return Ok();
         }
 
-        // POST api/Account/ViewedSchool
-        [Route("ViewedSchool")]
-        public async Task<IHttpActionResult> ViewedSchool(ViewedSchoolBindingModel model)
+        // POST api/Account/AddViewedSchool
+        [Route("AddViewedSchool")]
+        public async Task<IHttpActionResult> AddViewedSchool(AddViewedSchoolBindingModel model)
         {
             {
                 if (!ModelState.IsValid)
@@ -391,14 +393,13 @@ namespace GradCap.Controllers
 
                 ApplicationUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
 
-                GradCapContext db = new GradCapContext();
-
                 School School = db.Schools.FirstOrDefault(x => x.Name == model.SchoolName);
 
                 db.Users.FirstOrDefault(x => x.Id == user.Id).ViewedSchools.Add(School);
                 if(model.FavoriteSchool)
                 {
                     db.Users.FirstOrDefault(x => x.Id == user.Id).FavoriteSchools.Add(School);
+                    School.FavoriteStudents.Add(user);
                 }
                 db.SaveChanges();
 
@@ -417,8 +418,6 @@ namespace GradCap.Controllers
                 }
 
                 ApplicationUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-
-                GradCapContext db = new GradCapContext();
 
                 School School = db.Schools.FirstOrDefault(x => x.Name == model.SchoolName);
 
@@ -441,14 +440,25 @@ namespace GradCap.Controllers
 
                 ApplicationUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
 
-                GradCapContext db = new GradCapContext();
-
                 School School = db.Schools.FirstOrDefault(x => x.Name == model.SchoolName);
 
                 db.Users.FirstOrDefault(x => x.Id == user.Id).FavoriteSchools.Remove(School);
                 db.SaveChanges();
 
                 return Ok();
+            }
+        }
+
+        // GET api/Account/GetFavoriteSchools
+        [Route("GetFavoriteSchools")]
+        public IHttpActionResult GetFavoriteSchools()
+        {
+            {
+                ApplicationUser user = UserManager.FindById(User.Identity.GetUserId());
+
+                var favoriteSchools = new List<School>();
+                favoriteSchools = db.Users.FirstOrDefault(x => x.Id == user.Id).FavoriteSchools.ToList();
+                return Ok(favoriteSchools);
             }
         }
 
