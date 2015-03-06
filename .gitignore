@@ -7,7 +7,7 @@
 *.userosscache
 *.sln.docstates
 
-#HTML
+# HTML
 *.html
 
 # User-specific files (MonoDevelop/Xamarin Studio)

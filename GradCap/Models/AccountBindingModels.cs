@@ -98,7 +98,7 @@ namespace GradCap.Models
         [Required]
         public string SchoolName;
         [Required]
-        public bool FavoriteSchool;
+        public bool IsFavoriteSchool;
     }
 
     public class SchoolBindingModel

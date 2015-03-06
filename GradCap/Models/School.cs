@@ -11,6 +11,7 @@ namespace GradCap.Models
         {
             FavoriteStudents = new HashSet<ApplicationUser>();
         }
+
         public int Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }

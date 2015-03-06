@@ -6,7 +6,7 @@ using System.Web;
 
 namespace GradCap.DAL
 {
-    public class GradCapInitializer : System.Data.Entity.DropCreateDatabaseAlways<GradCapContext>
+    public class GradCapInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<GradCapContext>
     {
         protected override void Seed(GradCapContext context)
         {
