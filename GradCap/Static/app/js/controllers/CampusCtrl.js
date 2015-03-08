@@ -33,6 +33,17 @@ angular.module('gradCapApp.controllers').controller('CampusCtrl', ['$scope', '$l
         });
     };
 
+    $scope.removeFavorite = function(school) {
+        var req = {
+            SchoolName: school
+        };
+        Account.removeFavoriteSchool(req).then(function(success) {
+            alert('removed');
+        }, function(error) {
+            console.log(error);
+        });
+    };
+
     init();
 
 }]);

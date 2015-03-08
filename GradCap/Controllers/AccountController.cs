@@ -399,7 +399,6 @@ namespace GradCap.Controllers
                 if(model.IsFavoriteSchool)
                 {
                     db.Users.FirstOrDefault(x => x.Id == user.Id).FavoriteSchools.Add(School);
-                    //School.FavoriteStudents.Add(user);
                 }
                 db.SaveChanges();
 
@@ -440,9 +439,11 @@ namespace GradCap.Controllers
 
                 ApplicationUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
 
-                School School = db.Schools.FirstOrDefault(x => x.Name == model.SchoolName);
+                var currentUser = db.Users.FirstOrDefault(x => x.Id == user.Id);
+                School favSchool = db.Schools.FirstOrDefault(x => x.Name == model.SchoolName);
 
-                db.Users.FirstOrDefault(x => x.Id == user.Id).FavoriteSchools.Remove(School);
+                db.Entry(currentUser).Collection("FavoriteSchools").Load();
+                currentUser.FavoriteSchools.Remove(favSchool);
                 db.SaveChanges();
 
                 return Ok();

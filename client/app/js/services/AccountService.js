@@ -32,4 +32,14 @@ angular.module('gradCapApp.services').service('AccountService', ['$q', '$http', 
         return d.promise;
     };
 
+    this.removeFavoriteSchool = function(req) {
+        var d = $q.defer();
+        $http.post('api/Account/RemoveFavoriteSchool', req).success(function(data) {
+            d.resolve(data);
+        }).error(function(error) {
+            d.reject(error);
+        });
+        return d.promise;
+    };
+
 }]);

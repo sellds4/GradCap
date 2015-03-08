@@ -2,6 +2,7 @@
 br
 .fav-schools(ng-repeat="favSchool in favoriteSchools")
     .fav-school {{favSchool.Name}}
+    button(ng-click="removeFavorite(favSchool.Name)") Remove
 br
 br
 .schools(ng-repeat="school in schools")
