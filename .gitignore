@@ -11,6 +11,9 @@
 *.html
 !GradCap/*.html
 
+# .Net Static JS
+GradCap/Static
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
