@@ -1,10 +1,23 @@
 .logout(ng-click="logout()") Logout
 br
-.fav-schools(ng-repeat="favSchool in favoriteSchools")
-    .fav-school {{favSchool.Name}}
-    button(ng-click="removeFavorite(favSchool.Name)") Remove
+.options
+    .show-favorites(ng-click="changeView('favorites')") Favorites
+    br
+    .show-viewed-schools(ng-click="changeView('viewed')") Viewed
+    br
+    .show-unviewed-schools(ng-click="changeView('unviewed')") Unviewed
 br
-br
-.schools(ng-repeat="school in schools")
-    .school {{school.Name}}
-    button(ng-click="addFavorite(school.Name)") Add Favorite
+.schools
+    .fav-schools-container(ng-show="data.view==='favorites'")
+        .fav-schools(ng-repeat="favSchool in favoriteSchools | orderBy:'Name'")
+            .fav-school {{favSchool.Name}}
+            button(ng-click="removeFavorite(favSchool.Name)") Remove
+    .viewed-schools-container(ng-show="data.view==='viewed'")
+        .viewed-schools(ng-repeat="viewedSchool in viewedSchools | orderBy:'Name'")
+            .viewed-school {{viewedSchool.Name}}
+            button(ng-click="addFavorite(viewedSchool.Name)") Add Favorite 
+    .unviewed-schools-container(ng-show="data.view==='unviewed'")
+        .unviewed-schools(ng-repeat="school in allSchools | filter:isUnviewed | orderBy:'Name'")
+            .unviewed-school {{school.Name}}
+            button(ng-click="viewSchool(school.Name, true)") Add Favorite
+            button(ng-click="viewSchool(school.Name, false)") Not Interested

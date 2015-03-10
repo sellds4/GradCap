@@ -2,9 +2,10 @@
 
 angular.module('gradCapApp.services').service('AccountService', ['$q', '$http', function($q, $http) {
     
-    this.register = function(req) {
+    // GETS
+    this.getViewedSchools = function() {
         var d = $q.defer();
-        $http.post('/api/Account/Register', req).success(function(data) {
+        $http.get('/api/Account/GetViewedSchools').success(function(data) {
             d.resolve(data);
         }).error(function(error) {
             d.reject(error);
@@ -22,9 +23,30 @@ angular.module('gradCapApp.services').service('AccountService', ['$q', '$http', 
         return d.promise;
     };
 
+    // POSTS
+    this.register = function(req) {
+        var d = $q.defer();
+        $http.post('/api/Account/Register', req).success(function(data) {
+            d.resolve(data);
+        }).error(function(error) {
+            d.reject(error);
+        });
+        return d.promise;
+    };
+
     this.addViewedSchool = function(req) {
         var d = $q.defer();
         $http.post('/api/Account/AddViewedSchool', req).success(function(data) {
+            d.resolve(data);
+        }).error(function(error) {
+            d.reject(error);
+        });
+        return d.promise;
+    };
+
+    this.addFavoriteSchool = function(req) {
+        var d = $q.defer();
+        $http.post('api/Account/AddFavoriteSchool', req).success(function(data) {
             d.resolve(data);
         }).error(function(error) {
             d.reject(error);

@@ -450,17 +450,30 @@ namespace GradCap.Controllers
             }
         }
 
+        // GET api/Account/GetViewedSchools
+        [Route("GetViewedSchools")]
+        public IHttpActionResult GetViewedSchools()
+        {
+            ApplicationUser user = UserManager.FindById(User.Identity.GetUserId());
+
+            var currentUser = db.Users.FirstOrDefault(x => x.Id == user.Id);
+
+            db.Entry(currentUser).Collection("ViewedSchools").Load();
+
+            var viewedSchools = currentUser.ViewedSchools;
+
+            return Ok(viewedSchools);
+        }
+
         // GET api/Account/GetFavoriteSchools
         [Route("GetFavoriteSchools")]
         public IHttpActionResult GetFavoriteSchools()
         {
-            {
-                ApplicationUser user = UserManager.FindById(User.Identity.GetUserId());
+            ApplicationUser user = UserManager.FindById(User.Identity.GetUserId());
 
-                var favoriteSchools = db.Schools.Where(s => s.FavoriteStudents.Any(f => f.Id == user.Id));
+            var favoriteSchools = db.Schools.Where(s => s.FavoriteStudents.Any(f => f.Id == user.Id));
 
-                return Ok(favoriteSchools);
-            }
+            return Ok(favoriteSchools);
         }
 
         protected override void Dispose(bool disposing)
