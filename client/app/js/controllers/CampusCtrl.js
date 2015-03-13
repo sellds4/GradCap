@@ -8,7 +8,7 @@ angular.module('gradCapApp.controllers').controller('CampusCtrl', ['$scope', '$l
             view: 'favorites'
         }
     });
-    
+
     var viewedSchoolArray = [];
 
     function init() {
@@ -24,7 +24,7 @@ angular.module('gradCapApp.controllers').controller('CampusCtrl', ['$scope', '$l
         Account.getFavoriteSchools().then(function(success) {
             $scope.favoriteSchools = success;
         });
-    };
+    }
 
     $scope.isUnviewed = function(school) {
         if(viewedSchoolArray.indexOf(school.Name) === -1) {

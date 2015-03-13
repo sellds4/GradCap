@@ -14,7 +14,13 @@ angular.module('gradCapApp.directives', []);
 angular.module('gradCapApp.services', []);
 
 gradCapApp.config(function($routeProvider, $locationProvider) {
-    var templateLoc = './Static/app/partials';
+    var loginResolve = ['$q', '$location', 'localStorageService', function($q, $location, localStorage) {
+        if (localStorage.get('sessionData')) {
+            return $q.when(true);
+        } else {
+            return $q.reject($location.path('/login'));
+        }
+    }];
     
     $routeProvider
         .when('/', {
@@ -23,7 +29,16 @@ gradCapApp.config(function($routeProvider, $locationProvider) {
         })
         .when('/login', {
             templateUrl: './Static/app/partials/login.html',
-            controller: 'LoginCtrl'
+            controller: 'LoginCtrl',
+            resolve: {
+                loggedInResolve: ['$q', '$location', 'localStorageService', function($q, $location, localStorage) {
+                    if (!localStorage.get('sessionData')) {
+                        return $q.when(true);
+                    } else {
+                        return $q.reject($location.path('/campus'));
+                    }
+                }]
+            }
         })
         .when('/signup', {
             templateUrl: './Static/app/partials/signup.html',
@@ -31,7 +46,10 @@ gradCapApp.config(function($routeProvider, $locationProvider) {
         })
         .when('/campus', {
             templateUrl: './Static/app/partials/campus.html',
-            controller: 'CampusCtrl'
+            controller: 'CampusCtrl',
+            resolve:{
+                loginResolve: loginResolve
+            }
         })
         .otherwise({
             redirectTo: '/'
