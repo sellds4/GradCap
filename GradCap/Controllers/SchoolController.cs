@@ -14,6 +14,7 @@ using GradCap.Models;
 namespace GradCap.Controllers
 {
     [Authorize]
+    [RoutePrefix("api/School")]
     public class SchoolController : ApiController
     {
         private GradCapContext db = new GradCapContext();
@@ -25,7 +26,7 @@ namespace GradCap.Controllers
         }
 
         // GET: api/School/5
-        [ResponseType(typeof(School))]
+        /*[ResponseType(typeof(School))]
         public IHttpActionResult GetSchool(int id)
         {
             School school = db.Schools.Find(id);
@@ -35,10 +36,29 @@ namespace GradCap.Controllers
             }
 
             return Ok(school);
+        }*/
+
+        // GET api/School/Name/SchoolName
+        [Route("Name/{schoolName}")]
+        public IHttpActionResult GetSchoolDetailsByName(string schoolName)
+        {
+            School school = db.Schools.FirstOrDefault(x => x.Name == schoolName);
+            
+            return Ok(school);
+        }
+
+        // GET api/School/State/StateName
+        [Route("State/{stateName}")]
+        public IHttpActionResult GetSchoolByName(string stateName)
+        {
+            List<School> schools = new List<School>();
+            schools = db.Schools.Where(x => x.State.ToString() == stateName).ToList();
+
+            return Ok(schools);
         }
 
         // PUT: api/School/5
-        [ResponseType(typeof(void))]
+        /*[ResponseType(typeof(void))]
         public IHttpActionResult PutSchool(int id, School school)
         {
             if (!ModelState.IsValid)
@@ -101,7 +121,7 @@ namespace GradCap.Controllers
             db.SaveChanges();
 
             return Ok(school);
-        }
+        }*/
 
         protected override void Dispose(bool disposing)
         {
